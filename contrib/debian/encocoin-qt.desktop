@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Encocoin Core
+Comment=Encocoin P2P Cryptocurrency
+Comment[fr]=Encocoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Encocoin, eşten eşe kriptografik sanal para birimi
+Exec=encocoin-qt %u
+Terminal=false
+Type=Application
+Icon=encocoin128
+MimeType=x-scheme-handler/encocoin;
+Categories=Office;Finance;
+StartupWMClass=Encocoin-qt
