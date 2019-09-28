@@ -16,8 +16,6 @@
 #include "obfuscation.h"
 #include "protocol.h"
 
-using namespace std;
-using namespace boost;
 
 /*
     Don't ever reuse these IDs for other sporks
@@ -46,14 +44,14 @@ using namespace boost;
 #define SPORK_3_SWIFTTX_BLOCK_FILTERING_DEFAULT 1424217600        //2015-2-18
 #define SPORK_5_MAX_VALUE_DEFAULT 1000                            //1000 XNK
 #define SPORK_7_MASTERNODE_SCANNING_DEFAULT 978307200             //2001-1-1
-#define SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT_DEFAULT 4070908800 //ON
-#define SPORK_9_MASTERNODE_BUDGET_ENFORCEMENT_DEFAULT 4070908800  //ON
-#define SPORK_10_MASTERNODE_PAY_UPDATED_NODES_DEFAULT 4070908800  //ON
+#define SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT_DEFAULT 4070908800 //OFF
+#define SPORK_9_MASTERNODE_BUDGET_ENFORCEMENT_DEFAULT 4070908800  //OFF
+#define SPORK_10_MASTERNODE_PAY_UPDATED_NODES_DEFAULT 4070908800  //OFF
 //#define SPORK_11_LOCK_INVALID_UTXO_DEFAULT 4070908800             //OFF - NOTE: this is block height not time!
 #define SPORK_13_ENABLE_SUPERBLOCKS_DEFAULT 4070908800            //OFF
 #define SPORK_14_NEW_PROTOCOL_ENFORCEMENT_DEFAULT 4070908800      //OFF
 #define SPORK_15_NEW_PROTOCOL_ENFORCEMENT_2_DEFAULT 4070908800    //OFF
-#define SPORK_16_ZEROCOIN_MAINTENANCE_MODE_DEFAULT 4070908800     //ON
+#define SPORK_16_ZEROCOIN_MAINTENANCE_MODE_DEFAULT 4070908800     //OFF
 
 class CSporkMessage;
 class CSporkManager;
@@ -115,7 +113,7 @@ public:
     int GetSporkIDByName(std::string strName);
     bool UpdateSpork(int nSporkID, int64_t nValue);
     bool SetPrivKey(std::string strPrivKey);
-    bool CheckSignature(CSporkMessage& spork, bool fCheckSigner = false);
+    bool CheckSignature(CSporkMessage& spork, bool fRequireNew = false);
     bool Sign(CSporkMessage& spork);
     void Relay(CSporkMessage& msg);
 };

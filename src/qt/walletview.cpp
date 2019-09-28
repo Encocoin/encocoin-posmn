@@ -104,12 +104,14 @@ WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
     QLabel* transactionSumLabel = new QLabel();                // Label
     transactionSumLabel->setObjectName("transactionSumLabel"); // Label ID as CSS-reference
     transactionSumLabel->setText(tr("Selected amount:"));
+    transactionSumLabel->setStyleSheet("QLabel { color : #a71c20; }");
     hbox_buttons->addWidget(transactionSumLabel);
 
     transactionSum = new QLabel();                   // Amount
     transactionSum->setObjectName("transactionSum"); // Label ID as CSS-reference
     transactionSum->setMinimumSize(200, 8);
     transactionSum->setTextInteractionFlags(Qt::TextSelectableByMouse);
+    transactionSum->setStyleSheet("QLabel { color : #ffffff; }");
     hbox_buttons->addWidget(transactionSum);
 
     hbox_buttons->addWidget(exportButton);

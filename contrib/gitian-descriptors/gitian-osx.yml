@@ -1,5 +1,5 @@
 ---
-name: "encocoin-osx-3.3"
+name: "encocoin-osx-1.2"
 enable_cache: true
 distro: "ubuntu"
 suites:

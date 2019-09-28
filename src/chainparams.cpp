@@ -14,9 +14,8 @@
 #include <assert.h>
 
 #include <boost/assign/list_of.hpp>
+#include <limits>
 
-using namespace std;
-using namespace boost::assign;
 
 struct SeedSpec6 {
     uint8_t addr[16];
@@ -97,6 +96,17 @@ libzerocoin::ZerocoinParams* CChainParams::Zerocoin_Params(bool useModulusV1) co
     return &ZCParamsDec;
 }
 
+bool CChainParams::HasStakeMinAgeOrDepth(const int contextHeight, const uint32_t contextTime,
+        const int utxoFromBlockHeight, const uint32_t utxoFromBlockTime) const
+{
+    // before stake modifier V2, the age required was 60 * 60 (1 hour) / not required on regtest
+    if (!IsStakeModifierV2(contextHeight))
+        return (NetworkID() == CBaseChainParams::REGTEST || (utxoFromBlockTime + 3600 <= contextTime));
+
+    // after stake modifier V2, we require the utxo to be nStakeMinDepth deep in the chain
+    return (contextHeight - utxoFromBlockHeight >= nStakeMinDepth);
+}
+
 class CMainParams : public CChainParams
 {
 public:
@@ -122,14 +132,18 @@ public:
         nRejectBlockOutdatedMajority = 5130; // 95%
         nToCheckBlockUpgradeMajority = 5400; // Approximate expected amount of blocks in 7 days (720*7.5)
         nMinerThreads = 0;
-        nTargetTimespan = 6 * 60;
         nTargetSpacing = 2 * 60;
         nMaturity = 100;
+        nStakeMinDepth = 600;
+        nFutureTimeDriftPoW = 7200;
+        nFutureTimeDriftPoS = 180;
         nMasternodeCountDrift = 20;
         nMaxMoneyOut = 9999999999 * COIN;
 
         /** Height or Time Based Activations **/
         nLastPOWBlock = 500;
+        nEncocoinBadBlockTime = 1471401614; // Skip nBit validation of Block 259201 per PR #915
+        nEncocoinBadBlocknBits = 0x1c056dac; // Skip nBit validation of Block 259201 per PR #915
         nModifierUpdateBlock = 0;
         nZerocoinStartHeight = 0;
         nZerocoinStartTime = 1566914714;
@@ -143,7 +157,7 @@ public:
         nBlockDoubleAccumulated = 999999999;
         nEnforceNewSporkKey = 1566914714;
         nRejectOldSporkKey = 1527811200; 
-
+        nBlockStakeModifierlV2 = 75000;
         // Public coin spend enforcement
         nPublicZCSpends = 1;
 
@@ -165,7 +179,7 @@ public:
         CMutableTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
-        txNew.vin[0].scriptSig = CScript() << 486604799 << CScriptNum(4) << vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
+        txNew.vin[0].scriptSig = CScript() << 486604799 << CScriptNum(4) << std::vector<unsigned char>((const unsigned char*)pszTimestamp, (const unsigned char*)pszTimestamp + strlen(pszTimestamp));
         txNew.vout[0].nValue = 10 * COIN;
         txNew.vout[0].scriptPubKey = CScript() << ParseHex("0481aeab51967cd47692b590a0518ac623fe61ce4c849762434c3b9da16b8d5e916a644f57065c17a3538f5df79f1823ff38fa9f8343a2aa630a008ad2c2197cb5") << OP_CHECKSIG;
         genesis.vtx.push_back(txNew);
@@ -233,6 +247,7 @@ public:
     {
         return data;
     }
+
 };
 static CMainParams mainParams;
 
@@ -256,10 +271,12 @@ public:
         nRejectBlockOutdatedMajority = 3078; // 95%
         nToCheckBlockUpgradeMajority = 3240; // 4 days
         nMinerThreads = 0;
-        nTargetTimespan = 6 * 60;
         nTargetSpacing = 2 * 60;
         nLastPOWBlock = 200;
+        nEncocoinBadBlockTime = 1489001494; // Skip nBit validation of Block 259201 per PR #915
+        nEncocoinBadBlocknBits = 0x1e0a20bd; // Skip nBit validation of Block 201 per PR #915
         nMaturity = 15;
+        nStakeMinDepth = 100;
         nMasternodeCountDrift = 4;
         nModifierUpdateBlock = 0;
         nMaxMoneyOut = 43199500 * COIN;
@@ -274,7 +291,7 @@ public:
         nBlockZerocoinV2 = 999999999; //!> The block that zerocoin v2 becomes active
         nEnforceNewSporkKey = 1566914714;
         nRejectOldSporkKey = 1522454400; 
-
+        nBlockStakeModifierlV2 = 1214000;
         // Public coin spend enforcement
         nPublicZCSpends = 1;
 
@@ -349,11 +366,11 @@ public:
         nRejectBlockOutdatedMajority = 950;
         nToCheckBlockUpgradeMajority = 1000;
         nMinerThreads = 1;
-        nTargetTimespan = 24 * 60 * 60; // Encocoin: 1 day
         nTargetSpacing = 1 * 60;        // Encocoin: 1 minutes
         bnProofOfWorkLimit = ~uint256(0) >> 1;
         nLastPOWBlock = 250;
         nMaturity = 100;
+        nStakeMinDepth = 0;
         nMasternodeCountDrift = 4;
         nModifierUpdateBlock = 0; //approx Mon, 17 Apr 2017 04:00:00 GMT
         nMaxMoneyOut = 43199500 * COIN;
@@ -364,7 +381,7 @@ public:
         nBlockRecalculateAccumulators = 999999999; //Trigger a recalculation of accumulators
         nBlockFirstFraudulent = 999999999; //First block that bad serials emerged
         nBlockLastGoodCheckpoint = 999999999; //Last valid accumulator checkpoint
-
+        nBlockStakeModifierlV2 = std::numeric_limits<int>::max(); // max integer value (never switch on regtest)
         // Public coin spend enforcement
         nPublicZCSpends = 350;
 
@@ -433,7 +450,6 @@ public:
     virtual void setSkipProofOfWorkCheck(bool afSkipProofOfWorkCheck) { fSkipProofOfWorkCheck = afSkipProofOfWorkCheck; }
 };
 static CUnitTestParams unitTestParams;
-
 
 static CChainParams* pCurrentParams = 0;
 

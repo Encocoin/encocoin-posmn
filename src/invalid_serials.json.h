@@ -4,8 +4,8 @@
 
 
 
-#ifndef DEVIANT_INVALID_SERIALS_JSON_H
-#define DEVIANT_INVALID_SERIALS_JSON_H
+#ifndef ENCOCOIN_INVALID_SERIALS_JSON_H
+#define ENCOCOIN_INVALID_SERIALS_JSON_H
 
 #include <string>
 
@@ -16,4 +16,4 @@ std::string LoadInvalidSerials()
     return str;
 }
 
-#endif //DEVIANT_INVALID_SERIALS_JSON_H
+#endif //ENCOCOIN_INVALID_SERIALS_JSON_H

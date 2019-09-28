@@ -11,7 +11,6 @@
 #include "libzerocoin/Accumulator.h"
 #include "zxnk/zerocoin.h"
 
-using namespace libzerocoin;
 
 bool testRandKBitBignum(int k_bits)
 {

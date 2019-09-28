@@ -1,5 +1,5 @@
 ---
-name: "encocoin-win-3.3"
+name: "encocoin-win-1.2"
 enable_cache: true
 distro: "ubuntu"
 suites:
