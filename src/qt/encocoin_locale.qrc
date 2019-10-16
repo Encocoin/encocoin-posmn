@@ -1,0 +1,37 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource prefix="/translations">
+        <file alias="bg">locale/encocoin_bg.qm</file>
+        <file alias="ca">locale/encocoin_ca.qm</file>
+        <file alias="cs">locale/encocoin_cs.qm</file>
+        <file alias="da">locale/encocoin_da.qm</file>
+        <file alias="de">locale/encocoin_de.qm</file>
+        <file alias="en">locale/encocoin_en.qm</file>
+        <file alias="en_GB">locale/encocoin_en_GB.qm</file>
+        <file alias="en_US">locale/encocoin_en_US.qm</file>
+        <file alias="eo">locale/encocoin_eo.qm</file>
+        <file alias="es">locale/encocoin_es.qm</file>
+        <file alias="es_ES">locale/encocoin_es_ES.qm</file>
+        <file alias="fi">locale/encocoin_fi.qm</file>
+        <file alias="fr_FR">locale/encocoin_fr_FR.qm</file>
+        <file alias="hi_IN">locale/encocoin_hi_IN.qm</file>
+        <file alias="hr">locale/encocoin_hr.qm</file>
+        <file alias="hr_HR">locale/encocoin_hr_HR.qm</file>
+        <file alias="it">locale/encocoin_it.qm</file>
+        <file alias="ja">locale/encocoin_ja.qm</file>
+        <file alias="ko_KR">locale/encocoin_ko_KR.qm</file>
+        <file alias="lt_LT">locale/encocoin_lt_LT.qm</file>
+        <file alias="nl">locale/encocoin_nl.qm</file>
+        <file alias="pl">locale/encocoin_pl.qm</file>
+        <file alias="pt">locale/encocoin_pt.qm</file>
+        <file alias="pt_BR">locale/encocoin_pt_BR.qm</file>
+        <file alias="ro_RO">locale/encocoin_ro_RO.qm</file>
+        <file alias="ru">locale/encocoin_ru.qm</file>
+        <file alias="sk">locale/encocoin_sk.qm</file>
+        <file alias="sv">locale/encocoin_sv.qm</file>
+        <file alias="tr">locale/encocoin_tr.qm</file>
+        <file alias="uk">locale/encocoin_uk.qm</file>
+        <file alias="vi">locale/encocoin_vi.qm</file>
+        <file alias="zh_CN">locale/encocoin_zh_CN.qm</file>
+        <file alias="zh_TW">locale/encocoin_zh_TW.qm</file>
+    </qresource>
+</RCC>

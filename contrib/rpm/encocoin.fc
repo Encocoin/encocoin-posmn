@@ -1,0 +1,8 @@
+/usr/bin/encocoin-cli		--	gen_context(system_u:object_r:encocoin_exec_t,s0)
+/usr/sbin/encocoind		--	gen_context(system_u:object_r:encocoin_exec_t,s0)
+/usr/lib(64)?/encocoin/encocoind		--	gen_context(system_u:object_r:encocoin_exec_t,s0)
+
+/etc/encocoin(/.*)?		gen_context(system_u:object_r:encocoin_conf_t,s0)
+/var/lib/encocoin(/.*)?		gen_context(system_u:object_r:encocoin_var_lib_t,s0)
+
+(/var)?/run/encocoind(/.*)?   gen_context(system_u:object_r:encocoin_var_run_t,s0)
