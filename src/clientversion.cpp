@@ -43,10 +43,9 @@ const std::string CLIENT_NAME("Encocoin Core");
 #endif
 
 //! git will put "#define GIT_ARCHIVE 1" on the next line inside archives. 
-#define GIT_ARCHIVE 1
 #ifdef GIT_ARCHIVE
-#define GIT_COMMIT_ID "9a13855d2c6193156e4751986b6bae6d9148db8d"
-#define GIT_COMMIT_DATE "Sat, 12 Oct 2019 06:00:12 +0100"
+#define GIT_COMMIT_ID "$Format:%H$"
+#define GIT_COMMIT_DATE "$Format:%cD$"
 #endif
 
 #define BUILD_DESC_WITH_SUFFIX(maj, min, rev, build, suffix) \
