@@ -2060,8 +2060,8 @@ int64_t GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCou
     else if (nHeight > 25000) {
      ret = blockValue * 0.99;
     }
-    else if (nHeight > 75000 && pwalletMain->GetBalance() > (18000 * COIN)) {
-     ret = 2 * COIN;
+    else if (nHeight > 75000 ) {
+     ret = 2.99 * COIN;
     } else {
      ret = blockValue * 0.99;
     }

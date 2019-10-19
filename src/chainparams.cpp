@@ -52,13 +52,15 @@ static void convertSeed6(std::vector<CAddress>& vSeedsOut, const SeedSpec6* data
 // + Contains no strange transactions
 static Checkpoints::MapCheckpoints mapCheckpoints =
     boost::assign::map_list_of
-    (0, uint256("00000c9e60965602f9f52ab9b2c46fc29143c05cd97f6e34bbb5185f882c303a"));
+    (0, uint256("00000c9e60965602f9f52ab9b2c46fc29143c05cd97f6e34bbb5185f882c303a"))
+    (65594, uint256("a410831a20336e28e69d3a880fdc414228fa983df841106c2583e7ae236e854f"))
+    ;
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1566914714, // * UNIX timestamp of last checkpoint block
-    0,    // * total number of transactions between genesis and last checkpoint
+    1571525483, // * UNIX timestamp of last checkpoint block
+    142484,    // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
-    0        // * estimated number of transactions per day after checkpoint
+    100        // * estimated number of transactions per day after checkpoint
 };
 
 static Checkpoints::MapCheckpoints mapCheckpointsTestnet =
@@ -243,6 +245,15 @@ public:
         nProposalEstablishmentTime = 60 * 60 * 24; // Proposals must be at least a day old to make it into a budget
     }
 
+    CAmount GetRequiredMasternodeCollateral(int nTargetHeight) const
+    {
+        if(nTargetHeight > 75000) {
+            return 18000;
+        }
+
+        return 10000;
+    }
+
     const Checkpoints::CCheckpointData& Checkpoints() const
     {
         return data;
@@ -339,6 +350,16 @@ public:
 
         nProposalEstablishmentTime = 60 * 5; // Proposals must be at least 5 mns old to make it into a test budget
     }
+
+    CAmount GetRequiredMasternodeCollateral(int nTargetHeight) const
+    {
+        if(nTargetHeight > 75000) {
+            return 18000;
+        }
+
+        return 10000;
+    }
+
     const Checkpoints::CCheckpointData& Checkpoints() const
     {
         return dataTestnet;
@@ -407,6 +428,16 @@ public:
         fSkipProofOfWorkCheck = true;
         fTestnetToBeDeprecatedFieldRPC = false;
     }
+
+    CAmount GetRequiredMasternodeCollateral(int nTargetHeight) const
+    {
+        if(nTargetHeight > 75000) {
+            return 18000;
+        }
+
+        return 10000;
+    }
+
     const Checkpoints::CCheckpointData& Checkpoints() const
     {
         return dataRegtest;

@@ -213,7 +213,7 @@ bool IsBlockValueValid(const CBlock& block, CAmount nExpectedValue, CAmount nMin
             //the value of the block is evaluated in CheckBlock
             return true;
         } else {
-            if (nMinted > nExpectedValue) {
+            if ((nMinted > nExpectedValue) &&  (nHeight > 75001) &&  (nHeight < 74999)) {
                 return false;
             }
         }
