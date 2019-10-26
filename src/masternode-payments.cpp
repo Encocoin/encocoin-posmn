@@ -198,14 +198,14 @@ bool IsBlockValueValid(const CBlock& block, CAmount nExpectedValue, CAmount nMin
         if (nHeight % Params().GetBudgetCycleBlocks() < 100) {
             return true;
         } else {
-            if (nMinted > nExpectedValue) {
+            if (nMinted > nExpectedValue  && nHeight > 75010) {
                 return false;
             }
         }
     } else { // we're synced and have data so check the budget schedule
 
         //are these blocks even enabled
-        if (!IsSporkActive(SPORK_13_ENABLE_SUPERBLOCKS)) {
+        if (!IsSporkActive(SPORK_13_ENABLE_SUPERBLOCKS)  && nHeight > 75010) {
             return nMinted <= nExpectedValue;
         }
 
@@ -213,7 +213,7 @@ bool IsBlockValueValid(const CBlock& block, CAmount nExpectedValue, CAmount nMin
             //the value of the block is evaluated in CheckBlock
             return true;
         } else {
-            if ((nMinted > nExpectedValue) &&  (nHeight > 75001) &&  (nHeight < 74999)) {
+            if ((nMinted > nExpectedValue) && nHeight > 75010) {
                 return false;
             }
         }
