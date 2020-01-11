@@ -253,6 +253,17 @@ public:
 
         return 10000;
     }
+    
+    CAmount StakingMinInput(int nTargetHeight) const
+    {
+        //if(nTargetHeight < 183000) {
+        if(nTargetHeight < 1000) {
+            return 0 * COIN;
+        }
+        else {
+            return 50 * COIN;
+        }
+    }
 
     const Checkpoints::CCheckpointData& Checkpoints() const
     {
@@ -359,6 +370,16 @@ public:
 
         return 10000;
     }
+    
+    CAmount StakingMinInput(int nTargetHeight) const
+    {
+        if(nTargetHeight < 100) {
+            return 0 * COIN;
+        }
+        else {
+            return 50 * COIN;
+        }
+    }
 
     const Checkpoints::CCheckpointData& Checkpoints() const
     {
@@ -436,6 +457,16 @@ public:
         }
 
         return 10000;
+    }
+    
+    CAmount StakingMinInput(int nTargetHeight) const
+    {
+        if(nTargetHeight < 100) {
+            return 0 * COIN;
+        }
+        else {
+            return 50 * COIN;
+        }
     }
 
     const Checkpoints::CCheckpointData& Checkpoints() const

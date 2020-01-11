@@ -13,6 +13,7 @@
 #include "stakeinput.h"
 #include "utilmoneystr.h"
 #include "zxnkchain.h"
+#include "spork.h"
 
 // v1 modifier interval.
 static const int64_t OLD_MODIFIER_INTERVAL = 2087;
@@ -277,9 +278,13 @@ bool CheckStakeKernelHash(const CBlockIndex* pindexPrev, const unsigned int nBit
     if (!GetHashProofOfStake(pindexPrev, stake, nTimeTx, fVerify, hashProofOfStake)) {
         return error("%s : Failed to calculate the proof of stake hash", __func__);
     }
-
+    
     const CAmount& nValueIn = stake->GetValue();
     const CDataStream& ssUniqueID = stake->GetUniqueness();
+    
+    if ((GetAdjustedTime() > GetSporkValue(SPORK_17_STAKE_REQ_SZ_MODE)) && Params().StakingMinInput(pindexPrev->nHeight + 1) > nValueIn)  {
+        return error("%s : Failed to check coinstake min amount", __func__);
+    }
 
     // Base target
     uint256 bnTarget;

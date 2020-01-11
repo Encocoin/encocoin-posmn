@@ -1800,6 +1800,9 @@ bool CWallet::SelectStakeCoins(std::list<std::unique_ptr<CStakeInput> >& listInp
             //make sure not to outrun target amount
             if (nAmountSelected + out.tx->vout[out.i].nValue > nTargetAmount)
                 continue;
+            
+            if (out.tx->vout[out.i].nValue < Params().StakingMinInput(blockHeight))
+                continue;
 
             if (out.tx->vin[0].IsZerocoinSpend() && !out.tx->IsInMainChain())
                 continue;
@@ -1859,6 +1862,8 @@ bool CWallet::MintableCoins()
     CAmount nZxnkBalance = GetZerocoinBalance(false);
 
     int chainHeight = chainActive.Height();
+    
+    CAmount nMinAmount = Params().StakingMinInput(chainHeight);
 
     // Regular XNK
     if (nBalance > 0) {
@@ -1873,6 +1878,10 @@ bool CWallet::MintableCoins()
         int64_t time = GetAdjustedTime();
         for (const COutput& out : vCoins) {
             CBlockIndex* utxoBlock = mapBlockIndex.at(out.tx->hashBlock);
+            
+            if (out.Value() <= nMinAmount)
+                continue;
+            
             //check for maturity (min age/depth)
             if (Params().HasStakeMinAgeOrDepth(chainHeight, time, utxoBlock->nHeight, utxoBlock->nTime))
                 return true;

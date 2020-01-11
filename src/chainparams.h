@@ -140,8 +140,9 @@ public:
     int Block_Enforce_Invalid() const { return nBlockEnforceInvalidUTXO; }
     int Zerocoin_Block_V2_Start() const { return nBlockZerocoinV2; }
     bool IsStakeModifierV2(const int nHeight) const { return nHeight >= nBlockStakeModifierlV2; }
+    bool IsStakeModifierV3(const int nHeight) const { return nHeight >= nBlockStakeModifierlV3; }
     virtual CAmount GetRequiredMasternodeCollateral(int nTargetHeight) const = 0;
-    
+    virtual CAmount StakingMinInput(int nTargetHeight)  const = 0;
     // fake serial attack
     int Zerocoin_Block_EndFakeSerial() const { return nFakeSerialBlockheightEnd; }
     CAmount GetSupplyBeforeFakeSerial() const { return nSupplyBeforeFakeSerial; }
@@ -150,6 +151,7 @@ public:
     CAmount InvalidAmountFiltered() const { return nInvalidAmountFiltered; };
 
     int Zerocoin_Block_Public_Spend_Enabled() const { return nPublicZCSpends; }
+    
 
 protected:
     CChainParams() {}
@@ -224,6 +226,7 @@ protected:
     int nBlockDoubleAccumulated;
     int nPublicZCSpends;
     int nBlockStakeModifierlV2;
+    int nBlockStakeModifierlV3;
 
     // fake serial attack
     int nFakeSerialBlockheightEnd = 0;
