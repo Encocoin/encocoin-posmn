@@ -256,8 +256,7 @@ public:
     
     CAmount StakingMinInput(int nTargetHeight) const
     {
-        //if(nTargetHeight < 183000) {
-        if(nTargetHeight < 1000) {
+        if(nTargetHeight < 183000) {
             return 0 * COIN;
         }
         else {
